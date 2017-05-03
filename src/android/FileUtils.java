@@ -151,11 +151,10 @@ public class FileUtils extends CordovaPlugin {
     protected HashMap<String, String> getAvailableFileSystems(Activity activity) {
         Context context = activity.getApplicationContext();
         HashMap<String, String> availableFileSystems = new HashMap<String,String>();
-
-        availableFileSystems.put("files", context.getFilesDir().getAbsolutePath());
-        availableFileSystems.put("documents", new File(context.getFilesDir(), "Documents").getAbsolutePath());
-        availableFileSystems.put("cache", context.getCacheDir().getAbsolutePath());
-        availableFileSystems.put("root", "/");
+        //availableFileSystems.put("files", context.getFilesDir().getAbsolutePath());
+        //availableFileSystems.put("documents", new File(context.getFilesDir(), "Documents").getAbsolutePath());
+        //availableFileSystems.put("cache", context.getCacheDir().getAbsolutePath());
+        //availableFileSystems.put("root", "/");
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
           try {
             availableFileSystems.put("files-external", context.getExternalFilesDir(null).getAbsolutePath());
@@ -219,8 +218,9 @@ public class FileUtils extends CordovaPlugin {
     		// per spec.
     		this.registerFilesystem(new LocalFilesystem("temporary", webView.getContext(), webView.getResourceApi(), tmpRootFile));
     		this.registerFilesystem(new LocalFilesystem("persistent", webView.getContext(), webView.getResourceApi(), persistentRootFile));
-    		this.registerFilesystem(new ContentFilesystem(webView.getContext(), webView.getResourceApi()));
-            this.registerFilesystem(new AssetFilesystem(webView.getContext().getAssets(), webView.getResourceApi()));
+
+            //this.registerFilesystem(new ContentFilesystem(webView.getContext(), webView.getResourceApi()));
+            //this.registerFilesystem(new AssetFilesystem(webView.getContext().getAssets(), webView.getResourceApi()));
 
             registerExtraFileSystems(getExtraFileSystemsPreference(activity), getAvailableFileSystems(activity));
 
@@ -986,11 +986,12 @@ public class FileUtils extends CordovaPlugin {
 
     private JSONObject requestAllPaths() throws JSONException {
         Context context = cordova.getActivity();
+
         JSONObject ret = new JSONObject();
-        ret.put("applicationDirectory", "file:///android_asset/");
-        ret.put("applicationStorageDirectory", toDirUrl(context.getFilesDir().getParentFile()));
-        ret.put("dataDirectory", toDirUrl(context.getFilesDir()));
-        ret.put("cacheDirectory", toDirUrl(context.getCacheDir()));
+//        ret.put("applicationDirectory", "file:///android_asset/");
+//        ret.put("applicationStorageDirectory", toDirUrl(context.getFilesDir().getParentFile()));
+//        ret.put("dataDirectory", toDirUrl(context.getFilesDir()));
+//        ret.put("cacheDirectory", toDirUrl(context.getCacheDir()));
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
           try {
             ret.put("externalApplicationStorageDirectory", toDirUrl(context.getExternalFilesDir(null).getParentFile()));
